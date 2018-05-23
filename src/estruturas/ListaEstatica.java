@@ -4,10 +4,10 @@ package estruturas;
 public class ListaEstatica {
 
     private int inicio, fim, quantidade;
-    private int lista[];
+    private boolean lista[];
 
     public ListaEstatica(int tamanho) {
-        lista = new int[tamanho];
+        lista = new boolean[tamanho];
         inicio = fim = -1;
         quantidade = 0;
     }
@@ -26,7 +26,7 @@ public class ListaEstatica {
         return quantidade == lista.length;
     }
 
-    public void add(int elemento, int indice) {
+    public void add(boolean elemento, int indice) {
         if (!isFull() && indice >= 0 && indice <= quantidade) {
             if (quantidade == 0) {
                 inicio = 0;
@@ -43,7 +43,7 @@ public class ListaEstatica {
 
     public int remove(int indice) {
         if (!isEmpty() && indice >= 0 && indice < quantidade) {
-            int aux = lista[indice];
+            boolean aux = lista[indice];
             if (quantidade == 1) {
                 inicio--;
             } else {
@@ -53,23 +53,22 @@ public class ListaEstatica {
             }
             fim--;
             quantidade--;
-            return aux;
+            return indice;
         }
         return -1;
     }
 
-    public int set(int elemento, int indice) {
+    public int set(boolean elemento, int indice) {
         if (!isEmpty() && indice >= 0 && indice < quantidade) {
-            int aux = lista[indice];
             lista[indice] = elemento;
-            return aux;
+            return indice;
         }
         return -1;
     }
 
     public int get(int indice) {
         if (!isEmpty() && indice >= 0 && indice < quantidade) {
-            return lista[indice];
+            return lista[indice]? 1 : 0;            
         }
         return -1;
     }
