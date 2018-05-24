@@ -632,26 +632,83 @@ public class ElevadorMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void escutaMovimento() {
+        Timer timer = new Timer();
+        if (elevador.emMovimento()) {
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    if (elevador.getDirecao().equalsIgnoreCase("up")) {
+                        lblDirection.setText("▲");
+                    } else {
+                        lblDirection.setText("▼");
+                    }
+                    System.out.println("Andar Interface: "+ elevador.getAndarAtual());
+                    switch (elevador.getAndarAtual()) {
+                        case 0:
+                            lblAndarAtual.setText("T");
+                            BtnTerreo.setBackground(Color.white);
+                            break;
+                        case 1:
+                            lblAndarAtual.setText("" + elevador.getAndarAtual());
+                            Btn1.setBackground(Color.white);
+                            break;
+                        case 2:
+                            lblAndarAtual.setText("" + elevador.getAndarAtual());
+                            Btn2.setBackground(Color.white);
+                            break;
+                        case 3:
+                            lblAndarAtual.setText("" + elevador.getAndarAtual());
+                            Btn3.setBackground(Color.white);
+                            break;
+                        case 4:
+                            lblAndarAtual.setText("" + elevador.getAndarAtual());
+                            Btn4.setBackground(Color.white);
+                            break;
+                        case 5:
+                            lblAndarAtual.setText("" + elevador.getAndarAtual());
+                            Btn5.setBackground(Color.white);
+                            break;
+                        case 6:
+                            lblAndarAtual.setText("" + elevador.getAndarAtual());
+                            Btn6.setBackground(Color.white);
+                            break;
+                        case 7:
+                            lblAndarAtual.setText("" + elevador.getAndarAtual());
+                            Btn7.setBackground(Color.white);
+                            break;
+                        case 8:
+                            lblAndarAtual.setText("" + elevador.getAndarAtual());
+                            Btn8.setBackground(Color.white);
+                            break;
+                        case 9:
+                            lblAndarAtual.setText("" + elevador.getAndarAtual());
+                            Btn9.setBackground(Color.white);
+                            break;
+                        case 10:
+                            lblAndarAtual.setText("" + elevador.getAndarAtual());
+                            Btn10.setBackground(Color.white);
+                            break;
+                        case 11:
+                            lblAndarAtual.setText("" + elevador.getAndarAtual());
+                            Btn11.setBackground(Color.white);
+                            break;
+                    }
+                    if (!elevador.emMovimento()) {
+                        timer.cancel();
+                    }
+                }
+            }, 1000, 1000);
+        } else {
+            timer.cancel();
+        }
+    }
+
     private void BtnTerreoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnTerreoMousePressed
         if (!elevador.isPushed(0) && elevador.getAndarAtual() != 0) {
             BtnTerreo.setBackground(Color.red);
             elevador.chamar(0);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 0) {
-                        lblAndarAtual.setText("T");
-                        BtnTerreo.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_BtnTerreoMousePressed
 
@@ -659,22 +716,7 @@ public class ElevadorMain extends javax.swing.JFrame {
         if (!elevador.isPushed(1)) {
             Btn1.setBackground(Color.red);
             elevador.chamar(1);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 1) {
-                        lblAndarAtual.setText("" + elevador.getAndarAtual());
-                        Btn1.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_Btn1MousePressed
 
@@ -682,22 +724,7 @@ public class ElevadorMain extends javax.swing.JFrame {
         if (!elevador.isPushed(2)) {
             Btn2.setBackground(Color.red);
             elevador.chamar(2);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 2) {
-                        lblAndarAtual.setText("" + elevador.getAndarAtual());
-                        Btn2.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_Btn2MousePressed
 
@@ -705,22 +732,7 @@ public class ElevadorMain extends javax.swing.JFrame {
         if (!elevador.isPushed(3)) {
             Btn3.setBackground(Color.red);
             elevador.chamar(3);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 3) {
-                        lblAndarAtual.setText("" + elevador.getAndarAtual());
-                        Btn3.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_Btn3MousePressed
 
@@ -728,22 +740,7 @@ public class ElevadorMain extends javax.swing.JFrame {
         if (!elevador.isPushed(4)) {
             Btn4.setBackground(Color.red);
             elevador.chamar(4);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 4) {
-                        lblAndarAtual.setText("" + elevador.getAndarAtual());
-                        Btn4.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_Btn4MousePressed
 
@@ -751,22 +748,7 @@ public class ElevadorMain extends javax.swing.JFrame {
         if (!elevador.isPushed(5)) {
             Btn5.setBackground(Color.red);
             elevador.chamar(5);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 5) {
-                        lblAndarAtual.setText("" + elevador.getAndarAtual());
-                        Btn5.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_Btn5MousePressed
 
@@ -774,22 +756,7 @@ public class ElevadorMain extends javax.swing.JFrame {
         if (!elevador.isPushed(6)) {
             Btn6.setBackground(Color.red);
             elevador.chamar(6);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 6) {
-                        lblAndarAtual.setText("" + elevador.getAndarAtual());
-                        Btn6.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_Btn6MousePressed
 
@@ -797,22 +764,7 @@ public class ElevadorMain extends javax.swing.JFrame {
         if (!elevador.isPushed(7)) {
             Btn7.setBackground(Color.red);
             elevador.chamar(7);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 7) {
-                        lblAndarAtual.setText("" + elevador.getAndarAtual());
-                        Btn7.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_Btn7MousePressed
 
@@ -820,22 +772,7 @@ public class ElevadorMain extends javax.swing.JFrame {
         if (!elevador.isPushed(8)) {
             Btn8.setBackground(Color.red);
             elevador.chamar(8);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 8) {
-                        lblAndarAtual.setText("" + elevador.getAndarAtual());
-                        Btn8.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_Btn8MousePressed
 
@@ -843,22 +780,7 @@ public class ElevadorMain extends javax.swing.JFrame {
         if (!elevador.isPushed(9)) {
             Btn9.setBackground(Color.red);
             elevador.chamar(9);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 9) {
-                        lblAndarAtual.setText("" + elevador.getAndarAtual());
-                        Btn9.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_Btn9MousePressed
 
@@ -866,22 +788,7 @@ public class ElevadorMain extends javax.swing.JFrame {
         if (!elevador.isPushed(10)) {
             Btn10.setBackground(Color.red);
             elevador.chamar(10);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 10) {
-                        lblAndarAtual.setText("" + elevador.getAndarAtual());
-                        Btn10.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_Btn10MousePressed
 
@@ -889,22 +796,7 @@ public class ElevadorMain extends javax.swing.JFrame {
         if (!elevador.isPushed(11)) {
             Btn11.setBackground(Color.red);
             elevador.chamar(11);
-            if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                lblDirection.setText("▲");
-            } else {
-                lblDirection.setText("▼");
-            }
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("AndarAtualInterface: " + elevador.getAndarAtual());
-                    if (elevador.getAndarAtual() == 11) {
-                        lblAndarAtual.setText("" + elevador.getAndarAtual());
-                        Btn11.setBackground(Color.white);
-                    }
-                }
-            }, 3500);
+            escutaMovimento();
         }
     }//GEN-LAST:event_Btn11MousePressed
 

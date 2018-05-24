@@ -26,6 +26,10 @@ public class Elevador {
         this.direcao = "up";
     }
 
+    public boolean emMovimento() {
+        return !pilha.isEmpty();
+    }
+
     public boolean isPushed(int andar) {
         if (lista.get(andar) == 1) {
             return true;
@@ -35,48 +39,55 @@ public class Elevador {
     }
 
     public void valor(String key) {
-        System.out.println(key + pilha.toString());
+        System.out.println(key + lista.toString());
     }
 
-    public void mover(int andar) {
+    public void mover() {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                while (!pilha.isEmpty()) {
+                if (emMovimento()) {
                     if (direcao.equalsIgnoreCase("up")) {
                         andarAtual++;
                     } else {
                         andarAtual--;
                     }
                     if (andarAtual == pilha.top()) {
+//                        valor("ValorMove: ");
                         lista.set(false, pilha.top());
                         pilha.pop();
                     }
+                    System.out.println("AndarAtualElevador: " + andarAtual);
+                } else {
+                    timer.cancel();
                 }
-                timer.cancel();
             }
-        }, 3000, 3000);
+        }, 1000, 1000);
+    }
+
+    private void handlePush(int andar) {
+        pilha.push(andar);
+        lista.set(true, andar);
+        mover();
     }
 
     public void chamar(int andar) {
         if (andar != andarAtual && !isPushed(andar)) {
             if (pilha.isEmpty()) {
-                pilha.push(andar);
-                lista.set(true, andar);
+                handlePush(andar);
+                System.out.println("chamouVazio");
                 if (andar > andarAtual) {
                     direcao = "up";
                 } else {
                     direcao = "down";
                 }
-                mover(andar);
             } else {
                 switch (direcao) {
                     case "down":
                         if (andar > pilha.top()) {
-                            pilha.push(andar);
-                            lista.set(true, andar);
-                            mover(andar);
+                            handlePush(andar);
+                            System.out.println("chamouAndarMaiorDescendo");
                         } else {
                             int[] auxStack = new int[pilha.size()];
                             int count = 0;
@@ -87,20 +98,23 @@ public class Elevador {
                                 desempilhou = true;
                             }
                             pilha.push(andar);
+                            System.out.println("chamouAndarMaiorDescendoDesempilhado");
                             lista.set(true, andar);
                             if (desempilhou) {
                                 for (int i = count; i > 0; i--) {
                                     pilha.push(auxStack[i - 1]);
+                                    System.out.println("chamouAndarMaiorDescendoempilhado");
                                     lista.set(true, auxStack[i - 1]);
                                 }
                             }
                         }
+
+                        valor("FinalDown: ");
                         break;
                     case "up":
                         if (andar < pilha.top()) {
-                            pilha.push(andar);
-                            lista.set(true, andar);
-                            mover(andar);
+                            handlePush(andar);
+                            System.out.println("chamouAndarMaiorSubindo");
                         } else {
                             int[] auxStack = new int[pilha.size()];
                             int count = 0;
@@ -111,22 +125,18 @@ public class Elevador {
                                 desempilhou = true;
                             }
                             pilha.push(andar);
+                            System.out.println("chamouAndarMaiorSubindoDesempilhado");
                             lista.set(true, andar);
                             if (desempilhou) {
                                 for (int i = count; i > 0; i--) {
                                     pilha.push(auxStack[i - 1]);
+                                    System.out.println("chamouAndarMaiorSubindoempilhado");
                                     lista.set(true, auxStack[i - 1]);
                                 }
                             }
+                            mover();
                         }
-//                        valor("meio ");
-//                        pilha.push(andar);
-//                        valor("depois meio ");
-//                        for (int i = 0; i < auxStack.length - 1; i++) {
-//                            pilha.push(auxStack[i]);
-//                        }
-//                        valor("final4 ");
-                        valor("finalfINAL ");
+                        valor("FinalUp: ");
                         break;
                 }
             }

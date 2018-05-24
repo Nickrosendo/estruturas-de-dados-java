@@ -2,7 +2,6 @@ package estruturas;
 
 import java.util.Arrays;
 
-
 public class Pilha {
 
     private int pilha[];
@@ -53,7 +52,7 @@ public class Pilha {
         }
         return -1;
     }
-    
+
     public int top() {
         if (!isEmpty()) {
             return pilha[topo];
@@ -61,9 +60,4 @@ public class Pilha {
         return -1;
     }
     
-    @Override
-    public String toString(){
-        return Arrays.toString(this.pilha);
-    }
-            
 }

@@ -1,6 +1,8 @@
 
 package estruturas;
 
+import java.util.Arrays;
+
 public class ListaEstatica {
 
     private int inicio, fim, quantidade;
@@ -71,5 +73,11 @@ public class ListaEstatica {
             return lista[indice]? 1 : 0;            
         }
         return -1;
+    }
+    
+    
+    @Override
+    public String toString(){
+        return Arrays.toString(this.lista);
     }
 }
