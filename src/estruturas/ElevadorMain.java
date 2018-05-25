@@ -6,8 +6,8 @@
 package estruturas;
 
 import java.awt.Color;
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  *
@@ -15,13 +15,14 @@ import java.util.TimerTask;
  */
 public class ElevadorMain extends javax.swing.JFrame {
 
-    private Elevador elevador = new Elevador(12);
+    private final Elevador elevador;
 
     /**
      * Creates new form ElevadorMain
      */
     public ElevadorMain() {
         initComponents();
+        this.elevador = new Elevador(this);
         lblAndarAtual.setText("T");
         lblDirection.setText("▲");
     }
@@ -632,171 +633,87 @@ public class ElevadorMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void escutaMovimento() {
-        Timer timer = new Timer();
-        if (elevador.emMovimento()) {
-            timer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    if (elevador.getDirecao().equalsIgnoreCase("up")) {
-                        lblDirection.setText("▲");
-                    } else {
-                        lblDirection.setText("▼");
-                    }
-                    System.out.println("Andar Interface: "+ elevador.getAndarAtual());
-                    switch (elevador.getAndarAtual()) {
-                        case 0:
-                            lblAndarAtual.setText("T");
-                            BtnTerreo.setBackground(Color.white);
-                            break;
-                        case 1:
-                            lblAndarAtual.setText("" + elevador.getAndarAtual());
-                            Btn1.setBackground(Color.white);
-                            break;
-                        case 2:
-                            lblAndarAtual.setText("" + elevador.getAndarAtual());
-                            Btn2.setBackground(Color.white);
-                            break;
-                        case 3:
-                            lblAndarAtual.setText("" + elevador.getAndarAtual());
-                            Btn3.setBackground(Color.white);
-                            break;
-                        case 4:
-                            lblAndarAtual.setText("" + elevador.getAndarAtual());
-                            Btn4.setBackground(Color.white);
-                            break;
-                        case 5:
-                            lblAndarAtual.setText("" + elevador.getAndarAtual());
-                            Btn5.setBackground(Color.white);
-                            break;
-                        case 6:
-                            lblAndarAtual.setText("" + elevador.getAndarAtual());
-                            Btn6.setBackground(Color.white);
-                            break;
-                        case 7:
-                            lblAndarAtual.setText("" + elevador.getAndarAtual());
-                            Btn7.setBackground(Color.white);
-                            break;
-                        case 8:
-                            lblAndarAtual.setText("" + elevador.getAndarAtual());
-                            Btn8.setBackground(Color.white);
-                            break;
-                        case 9:
-                            lblAndarAtual.setText("" + elevador.getAndarAtual());
-                            Btn9.setBackground(Color.white);
-                            break;
-                        case 10:
-                            lblAndarAtual.setText("" + elevador.getAndarAtual());
-                            Btn10.setBackground(Color.white);
-                            break;
-                        case 11:
-                            lblAndarAtual.setText("" + elevador.getAndarAtual());
-                            Btn11.setBackground(Color.white);
-                            break;
-                    }
-                    if (!elevador.emMovimento()) {
-                        timer.cancel();
-                    }
-                }
-            }, 1000, 1000);
-        } else {
-            timer.cancel();
-        }
-    }
-
     private void BtnTerreoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnTerreoMousePressed
         if (!elevador.isPushed(0) && elevador.getAndarAtual() != 0) {
             BtnTerreo.setBackground(Color.red);
             elevador.chamar(0);
-            escutaMovimento();
         }
     }//GEN-LAST:event_BtnTerreoMousePressed
 
     private void Btn1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn1MousePressed
-        if (!elevador.isPushed(1)) {
+        if (!elevador.isPushed(1) && elevador.getAndarAtual() != 1) {
             Btn1.setBackground(Color.red);
             elevador.chamar(1);
-            escutaMovimento();
         }
     }//GEN-LAST:event_Btn1MousePressed
 
     private void Btn2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn2MousePressed
-        if (!elevador.isPushed(2)) {
+        if (!elevador.isPushed(2) && elevador.getAndarAtual() != 2) {
             Btn2.setBackground(Color.red);
             elevador.chamar(2);
-            escutaMovimento();
         }
     }//GEN-LAST:event_Btn2MousePressed
 
     private void Btn3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn3MousePressed
-        if (!elevador.isPushed(3)) {
+        if (!elevador.isPushed(3) && elevador.getAndarAtual() != 3) {
             Btn3.setBackground(Color.red);
             elevador.chamar(3);
-            escutaMovimento();
         }
     }//GEN-LAST:event_Btn3MousePressed
 
     private void Btn4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn4MousePressed
-        if (!elevador.isPushed(4)) {
+        if (!elevador.isPushed(4) && elevador.getAndarAtual() != 4) {
             Btn4.setBackground(Color.red);
             elevador.chamar(4);
-            escutaMovimento();
         }
     }//GEN-LAST:event_Btn4MousePressed
 
     private void Btn5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn5MousePressed
-        if (!elevador.isPushed(5)) {
+        if (!elevador.isPushed(5) && elevador.getAndarAtual() != 5) {
             Btn5.setBackground(Color.red);
             elevador.chamar(5);
-            escutaMovimento();
         }
     }//GEN-LAST:event_Btn5MousePressed
 
     private void Btn6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn6MousePressed
-        if (!elevador.isPushed(6)) {
+        if (!elevador.isPushed(6) && elevador.getAndarAtual() != 6) {
             Btn6.setBackground(Color.red);
             elevador.chamar(6);
-            escutaMovimento();
         }
     }//GEN-LAST:event_Btn6MousePressed
 
     private void Btn7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn7MousePressed
-        if (!elevador.isPushed(7)) {
+        if (!elevador.isPushed(7) && elevador.getAndarAtual() != 7) {
             Btn7.setBackground(Color.red);
             elevador.chamar(7);
-            escutaMovimento();
         }
     }//GEN-LAST:event_Btn7MousePressed
 
     private void Btn8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn8MousePressed
-        if (!elevador.isPushed(8)) {
+        if (!elevador.isPushed(8) && elevador.getAndarAtual() != 8) {
             Btn8.setBackground(Color.red);
             elevador.chamar(8);
-            escutaMovimento();
         }
     }//GEN-LAST:event_Btn8MousePressed
 
     private void Btn9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn9MousePressed
-        if (!elevador.isPushed(9)) {
+        if (!elevador.isPushed(9) && elevador.getAndarAtual() != 9) {
             Btn9.setBackground(Color.red);
             elevador.chamar(9);
-            escutaMovimento();
         }
     }//GEN-LAST:event_Btn9MousePressed
 
     private void Btn10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn10MousePressed
-        if (!elevador.isPushed(10)) {
+        if (!elevador.isPushed(10) && elevador.getAndarAtual() != 10) {
             Btn10.setBackground(Color.red);
             elevador.chamar(10);
-            escutaMovimento();
         }
     }//GEN-LAST:event_Btn10MousePressed
 
     private void Btn11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn11MousePressed
-        if (!elevador.isPushed(11)) {
+        if (!elevador.isPushed(11) && elevador.getAndarAtual() != 11) {
             Btn11.setBackground(Color.red);
             elevador.chamar(11);
-            escutaMovimento();
         }
     }//GEN-LAST:event_Btn11MousePressed
 
@@ -834,6 +751,120 @@ public class ElevadorMain extends javax.swing.JFrame {
             }
         });
     }
+
+    public JButton getBtnTerreo() {
+        return BtnTerreo;
+    }
+
+    public void setBtnTerreo(JButton BtnTerreo) {
+        this.BtnTerreo = BtnTerreo;
+    }
+
+    public JButton getBtn1() {
+        return Btn1;
+    }
+
+    public void setBtn1(JButton Btn1) {
+        this.Btn1 = Btn1;
+    }
+
+    public JButton getBtn10() {
+        return Btn10;
+    }
+
+    public void setBtn10(JButton Btn10) {
+        this.Btn10 = Btn10;
+    }
+
+    public JButton getBtn11() {
+        return Btn11;
+    }
+
+    public void setBtn11(JButton Btn11) {
+        this.Btn11 = Btn11;
+    }
+
+    public JButton getBtn2() {
+        return Btn2;
+    }
+
+    public void setBtn2(JButton Btn2) {
+        this.Btn2 = Btn2;
+    }
+
+    public JButton getBtn3() {
+        return Btn3;
+    }
+
+    public void setBtn3(JButton Btn3) {
+        this.Btn3 = Btn3;
+    }
+
+    public JButton getBtn4() {
+        return Btn4;
+    }
+
+    public void setBtn4(JButton Btn4) {
+        this.Btn4 = Btn4;
+    }
+
+    public JButton getBtn5() {
+        return Btn5;
+    }
+
+    public void setBtn5(JButton Btn5) {
+        this.Btn5 = Btn5;
+    }
+
+    public JButton getBtn6() {
+        return Btn6;
+    }
+
+    public void setBtn6(JButton Btn6) {
+        this.Btn6 = Btn6;
+    }
+
+    public JButton getBtn7() {
+        return Btn7;
+    }
+
+    public void setBtn7(JButton Btn7) {
+        this.Btn7 = Btn7;
+    }
+
+    public JButton getBtn8() {
+        return Btn8;
+    }
+
+    public void setBtn8(JButton Btn8) {
+        this.Btn8 = Btn8;
+    }
+
+    public JButton getBtn9() {
+        return Btn9;
+    }
+
+    public void setBtn9(JButton Btn9) {
+        this.Btn9 = Btn9;
+    }
+
+    public JLabel getLblAndarAtual() {
+        return lblAndarAtual;
+    }
+
+    public void setLblAndarAtual(JLabel lblAndarAtual) {
+        this.lblAndarAtual = lblAndarAtual;
+    }
+
+    public JLabel getLblDirection() {
+        return lblDirection;
+    }
+
+    public void setLblDirection(JLabel lblDirection) {
+        this.lblDirection = lblDirection;
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn1;

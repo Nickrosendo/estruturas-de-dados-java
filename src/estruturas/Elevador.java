@@ -1,6 +1,6 @@
 package estruturas;
 
-import java.util.HashSet;
+import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,17 +10,19 @@ import java.util.TimerTask;
  */
 public class Elevador {
 
-    private ListaEstatica lista;
-    private Pilha pilha;
-    private int andaresCount, andarAtual;
+    private final ListaEstatica lista;
+    private final Pilha pilha;
+    private final Timer timer = new Timer();
+    private final ElevadorMain component;
+    private int andarAtual;
     private String direcao;
 
-    public Elevador(int andaresCount) {
+    public Elevador(ElevadorMain component) {
+        this.component = component;
         this.andarAtual = 0;
-        this.andaresCount = andaresCount;
-        this.lista = new ListaEstatica(andaresCount);
-        this.pilha = new Pilha(andaresCount);
-        for (int i = 0; i < andaresCount; i++) {
+        this.lista = new ListaEstatica(12);
+        this.pilha = new Pilha(12);
+        for (int i = 0; i < 12; i++) {
             this.lista.add(false, i);
         }
         this.direcao = "up";
@@ -31,63 +33,113 @@ public class Elevador {
     }
 
     public boolean isPushed(int andar) {
-        if (lista.get(andar) == 1) {
-            return true;
-        } else {
-            return false;
+        return lista.get(andar) == 1;
+    }
+
+    public void handleArrival(int andar) {
+        switch (andar) {
+            case 0:
+                component.getBtnTerreo().setBackground(Color.white);
+                break;
+            case 1:
+                component.getBtn1().setBackground(Color.white);
+                break;
+            case 2:
+                component.getBtn2().setBackground(Color.white);
+                break;
+            case 3:
+                component.getBtn3().setBackground(Color.white);
+                break;
+            case 4:
+                component.getBtn4().setBackground(Color.white);
+                break;
+            case 5:
+                component.getBtn5().setBackground(Color.white);
+                break;
+            case 6:
+                component.getBtn6().setBackground(Color.white);
+                break;
+            case 7:
+                component.getBtn7().setBackground(Color.white);
+                break;
+            case 8:
+                component.getBtn8().setBackground(Color.white);
+                break;
+            case 9:
+                component.getBtn9().setBackground(Color.white);
+                break;
+            case 10:
+                component.getBtn10().setBackground(Color.white);
+                break;
+            case 11:
+                component.getBtn11().setBackground(Color.white);
+                break;
         }
     }
 
-    public void valor(String key) {
-        System.out.println(key + lista.toString());
-    }
-
     public void mover() {
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 if (emMovimento()) {
-                    if (direcao.equalsIgnoreCase("up")) {
+                    if (andarAtual < pilha.top()) {
                         andarAtual++;
-                    } else {
+                        direcao = "up";
+                        component.getLblDirection().setText("▲");
+                    } else if (andarAtual > pilha.top()) {
                         andarAtual--;
+                        direcao = "down";
+                        component.getLblDirection().setText("▼");
+                    }
+                    if (andarAtual == 0) {
+                        component.getLblAndarAtual().setText("T");
+                    } else {
+                        component.getLblAndarAtual().setText("" + andarAtual);
                     }
                     if (andarAtual == pilha.top()) {
-//                        valor("ValorMove: ");
                         lista.set(false, pilha.top());
-                        pilha.pop();
+                        handleArrival(pilha.pop());
                     }
-                    System.out.println("AndarAtualElevador: " + andarAtual);
                 } else {
-                    timer.cancel();
+                    this.cancel();
                 }
             }
-        }, 1000, 1000);
+        };
+        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
     }
 
     private void handlePush(int andar) {
         pilha.push(andar);
         lista.set(true, andar);
-        mover();
     }
 
     public void chamar(int andar) {
         if (andar != andarAtual && !isPushed(andar)) {
             if (pilha.isEmpty()) {
                 handlePush(andar);
-                System.out.println("chamouVazio");
-                if (andar > andarAtual) {
-                    direcao = "up";
-                } else {
-                    direcao = "down";
-                }
+                mover();
             } else {
                 switch (direcao) {
                     case "down":
-                        if (andar > pilha.top()) {
+                        if (andar > pilha.top() && andar < andarAtual) {
                             handlePush(andar);
-                            System.out.println("chamouAndarMaiorDescendo");
+                        } else if (andar > andarAtual) {
+                            int[] auxStack = new int[pilha.size()];
+                            int count = 0;
+                            boolean desempilhou = false;
+                            while (andar > pilha.top() && !pilha.isEmpty()) {
+                                auxStack[count] = pilha.pop();
+                                count++;
+                                desempilhou = true;
+                            }
+                            pilha.push(andar);
+                            lista.set(true, andar);
+                            if (desempilhou) {
+                                for (int i = count; i > 0; i--) {
+                                    pilha.push(auxStack[i - 1]);
+                                    lista.set(true, auxStack[i - 1]);
+                                }
+                            }
                         } else {
                             int[] auxStack = new int[pilha.size()];
                             int count = 0;
@@ -98,23 +150,35 @@ public class Elevador {
                                 desempilhou = true;
                             }
                             pilha.push(andar);
-                            System.out.println("chamouAndarMaiorDescendoDesempilhado");
                             lista.set(true, andar);
                             if (desempilhou) {
                                 for (int i = count; i > 0; i--) {
                                     pilha.push(auxStack[i - 1]);
-                                    System.out.println("chamouAndarMaiorDescendoempilhado");
                                     lista.set(true, auxStack[i - 1]);
                                 }
                             }
                         }
-
-                        valor("FinalDown: ");
                         break;
                     case "up":
-                        if (andar < pilha.top()) {
+                        if (andar < pilha.top() && andar > andarAtual) {
                             handlePush(andar);
-                            System.out.println("chamouAndarMaiorSubindo");
+                        } else if (andar < andarAtual) {
+                            int[] auxStack = new int[pilha.size()];
+                            int count = 0;
+                            boolean desempilhou = false;
+                            while (andar < pilha.top() && !pilha.isEmpty()) {
+                                auxStack[count] = pilha.pop();
+                                count++;
+                                desempilhou = true;
+                            }
+                            pilha.push(andar);
+                            lista.set(true, andar);
+                            if (desempilhou) {
+                                for (int i = count; i > 0; i--) {
+                                    pilha.push(auxStack[i - 1]);
+                                    lista.set(true, auxStack[i - 1]);
+                                }
+                            }
                         } else {
                             int[] auxStack = new int[pilha.size()];
                             int count = 0;
@@ -125,18 +189,14 @@ public class Elevador {
                                 desempilhou = true;
                             }
                             pilha.push(andar);
-                            System.out.println("chamouAndarMaiorSubindoDesempilhado");
                             lista.set(true, andar);
                             if (desempilhou) {
                                 for (int i = count; i > 0; i--) {
                                     pilha.push(auxStack[i - 1]);
-                                    System.out.println("chamouAndarMaiorSubindoempilhado");
                                     lista.set(true, auxStack[i - 1]);
                                 }
                             }
-                            mover();
                         }
-                        valor("FinalUp: ");
                         break;
                 }
             }
